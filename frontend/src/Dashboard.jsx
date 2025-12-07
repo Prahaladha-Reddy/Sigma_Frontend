@@ -194,10 +194,10 @@ export default function Dashboard({ session, supabaseClient }) {
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-black text-white">
+    <div className="relative min-h-screen bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-black text-white overflow-x-clip">
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-25 pointer-events-none" />
       <div className="absolute -top-32 -left-10 h-80 w-80 bg-white/10 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute -bottom-32 -right-10 h-80 w-80 bg-white/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute -right-10 h-80 w-80 bg-white/10 blur-[120px] rounded-full pointer-events-none" />
 
       <header className="sticky top-0 z-40 border-b border-white/10 bg-black/50 backdrop-blur-lg">
         <div className="max-w-6xl mx-auto px-4 md:px-6 flex items-center justify-between py-3 gap-3">
@@ -223,9 +223,11 @@ export default function Dashboard({ session, supabaseClient }) {
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
               <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-semibold">
-                {session.user.email[0].toUpperCase()}
+                {session?.user?.email?.[0].toUpperCase() || 'U'}
               </div>
-              <span className="hidden sm:block text-xs text-zinc-300 max-w-[140px] truncate">{session.user.email}</span>
+              <span className="hidden sm:block text-xs text-zinc-300 max-w-[140px] truncate">
+                {session?.user?.email || 'user@example.com'}
+              </span>
             </div>
           </div>
         </div>
@@ -288,7 +290,7 @@ export default function Dashboard({ session, supabaseClient }) {
       )}
 
       <main className="relative z-10">
-        <div className="max-w-6xl mx-auto px-4 md:px-6 py-6 lg:py-8">
+        <div className="max-w-7xl w-full mx-auto px-4 md:px-8 pt-6 pb-6">
           <div className="flex flex-col gap-2 mb-6 md:mb-8">
             <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-zinc-300">
               <span className="h-[1px] w-8 bg-white/60" />
@@ -433,7 +435,8 @@ export default function Dashboard({ session, supabaseClient }) {
               </section>
             </div>
 
-            <aside className="space-y-4 xl:sticky xl:top-28">
+            {/* FIX 2: Removed 'xl:sticky' class. The sidebar now flows naturally in the grid without getting stuck. */}
+            <aside className="space-y-4">
               <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-5 backdrop-blur-lg shadow-2xl shadow-white/5">
                 <div className="flex items-center justify-between gap-3 mb-4">
                   <h3 className="text-sm font-semibold">Status & output</h3>
@@ -552,7 +555,6 @@ export default function Dashboard({ session, supabaseClient }) {
                   )}
                 </div>
               </div>
-
             </aside>
           </div>
 
